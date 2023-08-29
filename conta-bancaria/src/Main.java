@@ -52,8 +52,12 @@ public class Main {
                 case 3:
                     System.out.println("Informe o valor a ser transferido:");
                     float valorATransferir = leitor.nextFloat();
-                    saldo -= valorATransferir;
-                    System.out.println(String.format("Seu saldo atualizado é R$ %.2f", saldo));
+                    if (valorATransferir > saldo) {
+                        System.out.println("Não há saldo suficiente para realizar a transferência");
+                    } else {
+                        saldo -= valorATransferir;
+                        System.out.println(String.format("Seu saldo atualizado é R$ %.2f", saldo));
+                    }
                     break;
                 case 4:
                     System.out.println("Saindo...");
