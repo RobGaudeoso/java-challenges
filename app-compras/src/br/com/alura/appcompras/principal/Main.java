@@ -3,41 +3,44 @@ package br.com.alura.appcompras.principal;
 import br.com.alura.appcompras.modelos.Cartao;
 import br.com.alura.appcompras.modelos.Produto;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
         Scanner leitor = new Scanner(System.in);
-        List<Produto> lista = new ArrayList<>();
-        Cartao cartao = new Cartao();
-        Produto produto = new Produto();
         int i = 1;
 
-        System.out.println("Digite o limite do cartão: ");
-        cartao.setLimite(leitor.nextDouble());
+        Cartao cartao = new Cartao();
 
-        while (i == 1 && cartao.getLimite() > produto.getPreco()) {
+        while (i == 1 && cartao.getSaldo() != 0) {
+            Produto produto = new Produto();
 
-            System.out.println("Digite o produto a ser comprado: ");
-            produto.setNome(leitor.next());
-
-            System.out.println("Digite o valor do produto: ");
-            produto.setPreco(leitor.nextDouble());
-            System.out.println(produto.getPreco());
-
-            if (produto.getPreco() < cartao.getLimite()) {
-                System.out.println("Compra realizada!");
+            if (produto.getPreco() <= cartao.getSaldo()) {
+                cartao.adicionaProduto(produto);
             } else {
                 System.out.println("Saldo insuficiente!");
             }
-
-            lista.add(produto);
-
-            System.out.println("Digite 0 para sair ou 1 para continuar");
-            i = leitor.nextInt();
-
+            if (cartao.getSaldo() == 0) {
+                System.out.println("Não há saldo para mais compras!");
+            } else {
+                System.out.println("Digite 0 para sair ou 1 para continuar");
+                i = leitor.nextInt();
+            }
         }
+
+        System.out.println("""
+                ***************************
+                COMPRAS REALIZADAS:
+                """);
+        for (Produto produto:
+                cartao.getFatura()) {
+            System.out.println(produto);
+        }
+        System.out.println("""
+                
+                ***************************
+                
+                Saldo do cartão: """ + cartao.getSaldo() + """
+                """);
     }
 }
